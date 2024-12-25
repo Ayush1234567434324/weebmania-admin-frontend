@@ -8,7 +8,11 @@ const Admin = ({ folderName, setFolderName, images, handleImageChange, loading, 
   return (
     <div>
       <FolderNameInput folderName={folderName} setFolderName={setFolderName} />
-      <ImageUpload handleImageChange={handleImageChange} images={images} />
+      <ImageUpload handleImageChange={handleImageChange} images={images} labels={[
+        { title: 'Introductory Image', key: 'intro' },
+        { title: 'Common Image', key: 'common' },
+      ]} />
+      
       <UploadButton
         loading={loading}
         isAuthenticated={isAuthenticated}

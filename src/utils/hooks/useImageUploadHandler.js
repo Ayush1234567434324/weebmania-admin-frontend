@@ -11,7 +11,7 @@ const useImageUploadHandler = (images, folderName) => {
       return;
     }
 
-    const requiredImages = ['cover', 'end', 'intro', 'common'];
+    const requiredImages = ['intro', 'common'];
     const missingImages = requiredImages.filter(imageType => !images[imageType]);
 
     if (missingImages.length > 0) {

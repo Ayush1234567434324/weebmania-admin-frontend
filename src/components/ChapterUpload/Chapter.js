@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchImagesFromFolder } from '../../services/googleDriveService';
+import ImageUpload from '../ImageUpload/ImageUpload';
 import './Chapter.css';
 
-export default function Chapter() {
-    const [images, setImages] = useState([]);
+export default function Chapter({handleImageChange,images}) {
+    const [images_, setImages] = useState([]);
     const selectedFolder = useSelector((state) => state.folder.selectedFolder);
 
     useEffect(() => {
@@ -28,11 +29,11 @@ export default function Chapter() {
             <p className="chapter-container__folder-info">Selected Folder: {selectedFolder}</p>
 
             <div className="chapter-container__gallery">
-                {images.length > 0 ? (
-                    images.map((image) => (
+                {images_.length > 0 ? (
+                    images_.map((image) => (
                         <div key={image.id} className="chapter-container__image-item">
                             <img
-                                src={`/image/${image.id}`} // Using the /image/:fileId route
+                                src={`https://weebmania-admin.vercel.app/api/getImageFromId/${image.id}`} // Using the /image/:fileId route
                                 alt={image.name}
                                 className="chapter-container__image"
                             />
@@ -42,6 +43,11 @@ export default function Chapter() {
                 ) : (
                     <p className="chapter-container__no-images-message">No images found in this folder.</p>
                 )}
+
+<ImageUpload handleImageChange={handleImageChange} images={images} labels={[
+        { title: 'Cover', key: 'Cover' },
+        { title: 'Back', key: 'Back' },
+      ]} />
             </div>
         </div>
     );

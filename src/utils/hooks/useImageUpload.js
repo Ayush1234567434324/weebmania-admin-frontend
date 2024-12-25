@@ -1,12 +1,9 @@
 import { useState } from 'react';
-
+//for two image upload 
 const useImageUpload = () => {
   const [images, setImages] = useState({
-    cover: null,
-    end: null,
-    intro: null,
-    common: null,
-    pages: [],
+    image1 : null,
+    image2: null,
   });
 
   const handleImageChange = (event, imageType) => {

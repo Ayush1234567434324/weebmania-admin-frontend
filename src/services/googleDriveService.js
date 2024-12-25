@@ -2,7 +2,7 @@ import { gapi } from "gapi-script";
 
 // Function to get the 'Manga' folder ID
 export const getMangaFolderId = () => {
-  return '1gjq1E_hi08sV1bBNYdKMmmF0DDaaT14B';
+  return '1Z_qAAbRmK3NEmLpSgjW3PpRrSVgrZIot';
 };
 
 
