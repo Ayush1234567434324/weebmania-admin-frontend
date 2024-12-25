@@ -129,7 +129,7 @@ export const createFolder = (folderName) => {
     return files;
   };
   
-  const getFolderIdByName = async (folderName) => {
+  export const getFolderIdByName = async (folderName) => {
     try {
       const response = await window.gapi.client.drive.files.list({
         q: `name = '${folderName}' and mimeType = 'application/vnd.google-apps.folder'`,
@@ -148,7 +148,7 @@ export const createFolder = (folderName) => {
     }
   };
   
-  const listFilesInFolder = async (folderId) => {
+  export const listFilesInFolder = async (folderId) => {
     try {
       const response = await window.gapi.client.drive.files.list({
         q: `'${folderId}' in parents`,
@@ -163,3 +163,48 @@ export const createFolder = (folderName) => {
       return [];
     }
   };
+
+
+
+
+
+
+  export const createChapterFolder = async (folderName,parent) => {
+    const drive = gapi.client.drive;
+    const folderMetadata = {
+        name: folderName,
+        mimeType: "application/vnd.google-apps.folder",
+        parents: [parent], // Replace with the ID of the parent folder
+    };
+
+    try {
+        const response = await drive.files.create({
+            resource: folderMetadata,
+            fields: "id",
+        });
+        console.log("Folder created with ID:", response.result.id);
+    } catch (error) {
+        console.error("Error creating folder:", error);
+        throw error;
+    }
+};
+
+export const listFolders = async (parentFolderId) => {
+  try {
+      const response = await gapi.client.drive.files.list({
+          q: `'${parentFolderId}' in parents and mimeType = 'application/vnd.google-apps.folder' and trashed = false`,
+          fields: "files(id, name)",
+      });
+
+      const folders = response.result.files.map((file) => ({
+          id: file.id,
+          name: file.name,
+      }));
+
+      console.log("Folders:", folders);
+      return folders;
+  } catch (error) {
+      console.error("Error fetching folders:", error);
+      throw error;
+  }
+};
